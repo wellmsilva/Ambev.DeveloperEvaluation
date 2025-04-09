@@ -10,12 +10,12 @@ public static class RabbitMqExtension
 {
     public static void AddRabbitMq(this WebApplicationBuilder builder)
     {
-  
+
         builder.Services.AddMassTransit(cfg =>
         {
             cfg.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
             {
-                cfg.Host(new Uri("rabbitmq://localhost"), h =>
+                cfg.Host(new Uri(string.Concat("rabbitmq://", builder.Configuration.GetValue("RabbitMQ:Host", "localhost"))), h =>
                 {
                     h.Username(builder.Configuration.GetValue("RabbitMQ:Username", string.Empty));
                     h.Password(builder.Configuration.GetValue("RabbitMQ:Password", string.Empty));
