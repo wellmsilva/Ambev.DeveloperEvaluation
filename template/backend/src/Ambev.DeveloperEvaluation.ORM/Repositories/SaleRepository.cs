@@ -1,7 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 
@@ -14,23 +13,18 @@ public class SaleRepository : ISaleRepository
         _context = context;
     }
 
-    public async Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken)
+    public async Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         await _context.Sales.AddAsync(sale, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return sale;
     }
 
-    public IQueryable<Sale> GetAllAsync(string? filters, string order = "asc", CancellationToken cancellationToken = default)
+    public IQueryable<Sale> GetAllAsync(string? orderField, string? order = "asc", CancellationToken cancellationToken = default)
     {
         var query = _context.Sales
           .Include(x => x.Products)
           .AsNoTracking();
-
-        //if (string.IsNullOrEmpty(filters))
-        //{
-        //    query = query.Where(x => x.Number == int.Parse(filters!));
-        //}
 
         if (order == "asc")
             query = query.OrderBy(x => x.Number);
@@ -54,14 +48,16 @@ public class SaleRepository : ISaleRepository
             .Include(x => x.Products)
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }
+     
 
-    public Task<int> GetTotalCountAsync(string filters, CancellationToken cancellationToken = default)
+    public async Task<bool> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    public async Task<bool> Update(Sale sale, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(Sale sale, CancellationToken cancellationToken = default)
     {
+        _context.Sales.Remove(sale);
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 }

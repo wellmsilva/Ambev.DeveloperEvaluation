@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250408061121_AddSales")]
-    partial class AddSales
+    [Migration("20250409003029_AddFeaturesSales")]
+    partial class AddFeaturesSales
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,9 +69,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("character varying(70)");
 
-                    b.Property<DateTime?>("CancelledAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uuid");
 
@@ -83,6 +80,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<int>("Number")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

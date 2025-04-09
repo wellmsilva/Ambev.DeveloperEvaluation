@@ -3,7 +3,6 @@ using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Exceptions;
 using Ambev.DeveloperEvaluation.Domain.Specifications;
 using Ambev.DeveloperEvaluation.Domain.Validation;
-using Microsoft.AspNetCore.Identity;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -14,7 +13,7 @@ public class Sale : BaseEntity
     /// <summary>
     /// Sale number
     /// </summary>
-    public int Number { get; init; }
+    public int Number { get; private set; }
 
     /// <summary>
     /// Date when the sale was made
@@ -24,12 +23,12 @@ public class Sale : BaseEntity
     /// <summary>
     /// Customer name
     /// </summary>
-    public Guid CustomerId { get; init; }
+    public Guid CustomerId { get; private set; }
 
     /// <summary>
     /// Branch where the sale was made
     /// </summary>
-    public string Branch { get; init; } = string.Empty;
+    public string Branch { get; private set; } = string.Empty;
 
     /// <summary>
     /// The list of products
@@ -42,9 +41,9 @@ public class Sale : BaseEntity
     public bool IsCancelled { get; private set; }
 
     /// <summary>
-    /// Date the sale was cancelled
+    /// Date the sale was updated
     /// </summary>
-    public DateTime? CancelledAt { get; private set; }
+    public DateTime? UpdatedAt { get; private set; }
 
 
     protected Sale() { }
@@ -64,7 +63,7 @@ public class Sale : BaseEntity
     public void Cancel()
     {
         IsCancelled = true;
-        CancelledAt = DateTime.UtcNow;
+        UpdatedAt = DateTime.UtcNow;
     }
 
 
@@ -95,5 +94,13 @@ public class Sale : BaseEntity
             IsValid = result.IsValid,
             Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
         };
+    }
+
+    public void Update(int number, Guid customerId, string branch)
+    {
+        Number = number;
+        CustomerId = customerId;
+        Branch = branch;
+        UpdatedAt = DateTime.UtcNow;
     }
 }

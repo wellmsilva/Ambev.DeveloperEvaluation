@@ -71,6 +71,20 @@ This section lists the key technologies used in the project, including the backe
 
 See [Tech Stack](/.doc/tech-stack.md)
 
+---
+
+We use the following technologies in this project:
+
+Backend:
+
+- **.NET 8.0:** A free, cross-platform, open source developer platform for building many different types of applications.
+
+  Git: https://github.com/dotnet/core
+
+- **C#:** A modern object-oriented programming language developed by Microsoft.
+
+  Git: https://github.com/dotnet/csharplang
+
 ## Frameworks
 
 This section outlines the frameworks and libraries that are leveraged in the project to enhance development productivity and maintainability.
@@ -86,6 +100,30 @@ This section includes links to the detailed documentation for the different API 
 - [Users API](/.doc/users-api.md)
 - [Auth API](/.doc/auth-api.md)
 -->
+
+---
+
+We use the following frameworks in this project:
+
+Backend:
+
+- **Mediator:** https://github.com/jbogard/MediatR
+
+- **Automapper:** https://github.com/AutoMapper/AutoMapper
+
+- **MassTransit:** https://github.com/MassTransit/MassTransit
+
+Testing:
+
+- **Faker:** https://github.com/bchavez/Bogus
+
+- **NSubstitute:** https://github.com/nsubstitute/NSubstitute
+
+- **NBuilder:** https://github.com/nbuilder/nbuilder
+
+Batabase:
+
+- **EF Core:** https://github.com/dotnet/efcore
 
 ## Project Structure
 

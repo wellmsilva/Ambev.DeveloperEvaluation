@@ -28,7 +28,7 @@ internal sealed class CancelSaleHandler : IRequestHandler<CancelSaleCommand, boo
         }
 
         sale.Cancel();
-        var result = await _saleRepository.Update(sale);
+        var result = await _saleRepository.UpdateAsync(sale);
         if (!result)
         {
             return default;

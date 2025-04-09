@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Application;
 using Ambev.DeveloperEvaluation.Common.HealthChecks;
 using Ambev.DeveloperEvaluation.Common.Logging;
+using Ambev.DeveloperEvaluation.Common.RabbitMq;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.IoC;
@@ -22,6 +23,7 @@ public class Program
 
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             builder.AddDefaultLogging();
+            builder.AddRabbitMq();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -51,6 +53,7 @@ public class Program
             });
 
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+         
 
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();

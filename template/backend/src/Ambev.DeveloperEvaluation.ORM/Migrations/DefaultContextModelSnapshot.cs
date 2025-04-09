@@ -66,9 +66,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("character varying(70)");
 
-                    b.Property<DateTime?>("CancelledAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uuid");
 
@@ -80,6 +77,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<int>("Number")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

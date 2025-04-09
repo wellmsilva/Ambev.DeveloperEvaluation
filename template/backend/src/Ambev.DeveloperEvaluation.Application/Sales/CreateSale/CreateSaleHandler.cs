@@ -1,7 +1,10 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.Events;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +15,14 @@ internal sealed class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Cre
     private readonly IMapper _mapper;
     private readonly ISaleRepository _saleRepository;
     private readonly ILogger<CreateSaleHandler> _logger;
+    readonly IBus _bus;
 
-    public CreateSaleHandler(IMapper mapper, ISaleRepository saleRepository, ILogger<CreateSaleHandler> logger)
+    public CreateSaleHandler(IMapper mapper, ISaleRepository saleRepository, ILogger<CreateSaleHandler> logger, IBus bus)
     {
         _mapper = mapper;
         _saleRepository = saleRepository;
         _logger = logger;
+        _bus = bus;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
@@ -31,9 +36,11 @@ internal sealed class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Cre
             throw new ValidationException(validationResult.Errors);
         }
 
-        Sale sale = command;       
+        Sale sale = command;
 
         var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
+
+        await _bus.Publish(new EventSalesMessage(EventSale.SaleCreated, sale.Id, DateTime.UtcNow), cancellationToken);
 
         return _mapper.Map<CreateSaleResult>(createdSale);
     }

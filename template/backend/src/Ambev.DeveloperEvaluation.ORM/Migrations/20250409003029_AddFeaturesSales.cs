@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSales : Migration
+    public partial class AddFeaturesSales : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
                     Branch = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
                     IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
-                    CancelledAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

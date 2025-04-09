@@ -13,6 +13,22 @@ public interface ISaleRepository
     Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sale"></param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns></returns>
+    Task<bool> DeleteAsync(Sale sale, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sale"></param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns></returns>
+    Task<bool> UpdateAsync(Sale sale, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets sales in the repository
     /// </summary>
     /// <param name="filters"></param>
@@ -39,12 +55,4 @@ public interface ISaleRepository
     /// <returns>The sale selected </returns>
     Task<Sale?> GetByIdNoTrackingAsync(Guid id, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="filters"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<int> GetTotalCountAsync(string filters, CancellationToken cancellationToken = default);
-    Task<bool> Update(Sale sale, CancellationToken cancellationToken = default);
 }
